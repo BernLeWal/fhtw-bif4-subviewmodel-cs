@@ -11,14 +11,19 @@ namespace WpfSubViewExample
     {
         private void App_OnStartup(object sender, StartupEventArgs e)
         {
-            var searchBarViewModel = new SearchBarViewModel();
+            // BIZ-layer
             var searchEngine = new StandardSearchEngine();
+
+            // MVVM:
+            //var searchBarViewModel = new SearchBarViewModel();
+            var singleLineSearchBarViewModel = new SingleLineSearchBarViewModel();
             var resultViewModel = new ResultViewModel();
 
             var wnd = new MainWindow
             {
-                DataContext = new MainViewModel(searchBarViewModel, resultViewModel, searchEngine),
-                SearchBar = { DataContext = searchBarViewModel },
+                DataContext = new MainViewModel(singleLineSearchBarViewModel, resultViewModel, searchEngine),
+                SingleLineSearchBar = { DataContext = singleLineSearchBarViewModel },
+                //SearchBar = { DataContext = searchBarViewModel },
                 ResultView = { DataContext = resultViewModel }
             };
 

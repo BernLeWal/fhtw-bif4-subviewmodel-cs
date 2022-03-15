@@ -6,17 +6,30 @@ namespace WpfSubViewExample.ViewModels
 {
     public class MainViewModel : BaseViewModel
     {
+        // ViewModels of UserControls:
         private readonly ResultViewModel resultView;
+        private readonly SingleLineSearchBarViewModel singleLineSearchBarViewModel;
+
+        // BIZ - layer
         private readonly ISearchEngine searchEngine;
 
-        public MainViewModel(SearchBarViewModel searchBar, ResultViewModel resultView, ISearchEngine searchEngine)
+        public MainViewModel(SingleLineSearchBarViewModel singleLineSearchBarViewModel, ResultViewModel resultView, ISearchEngine searchEngine)
         {
-            
-            searchBar.SearchTextChanged += (_, searchText) =>
+            // initialize Sub-ViewModels
+            this.resultView = resultView;
+            this.singleLineSearchBarViewModel = singleLineSearchBarViewModel;
+            singleLineSearchBarViewModel.OnSearchClicked += (_, searchText) =>
             {
+                // call the BIZ-layer
                 SearchTours(searchText);
             };
-            this.resultView = resultView;
+            
+            //searchBar.SearchTextChanged += (_, searchText) =>
+            //{
+            //    SearchTours(searchText);
+            //};
+
+            // init ref to BIZ-Layer
             this.searchEngine = searchEngine;
         }
 
